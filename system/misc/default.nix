@@ -120,15 +120,17 @@
       packages = with pkgs; [
         fira-code
         roboto
+        ubuntu_font_family
         openmoji-color
         noto-fonts-emoji
-        (nerdfonts.override { fonts = [ "FiraCode" ]; })
+        font-awesome
+        (nerdfonts.override { fonts = [ "FiraCode" "Ubuntu" ]; })
       ];
   
       fontconfig = {
         defaultFonts = {
-          serif = [ "Roboto" ];
-          sansSerif = [ "Roboto" ];
+          serif = [ "Ubuntu" ];
+          sansSerif = [ "Ubuntu" ];
           monospace = [ "FiraCode" ];
           emoji = [ "OpenMoji Color" ];
         };

@@ -1,6 +1,16 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, writeShellApplication, nixpkgs, ... }:
 let
   cfg = config.modules.waybar;
+  python3 = pkgs.python3.withPackages (ps: with ps; [ requests ]);
+  weatherScript = pkgs.writeShellApplication {
+    name = "weather";
+    runtimeInputs = [
+      python3
+    ];
+    text = ''
+      python3 ${./scripts/weather.py}
+    '';
+  };
 in
 {
   options.modules.waybar = {
@@ -12,45 +22,26 @@ in
     programs.waybar = {
       enable = true;
       style = ''
-        ${builtins.readFile "${pkgs.waybar}/etc/xdg/waybar/style.css"}
-
-        window#waybar {
-          background: transparent;
-          border-bottom: none;
-        }
+        ${builtins.readFile ./styles.css}
       '';
 
       settings = [
         {
-          height = 30;
           layer = "top";
           position = "top";
-          tray = { spacing = 10; };
-          modules-center = [ "hyprland/window" ];
+          modules-center = [ "clock" "custom/weather" ];
           modules-left = [ "hyprland/workspaces" "hyprland/submap" ];
           modules-right = [
             "pulseaudio"
-            "network"
             "cpu"
             "memory"
             "temperature"
-            "clock"
-            "tray"
           ];
           clock = {
-            format-alt = "{:%Y-%m-%d}";
-            tooltip-format = "{:%Y-%m-%d | %H:%M}";
+            format-alt = "{:%Y-%m-%d 󰃭 %H:%M }";
           };
           cpu = { format = "{usage}% "; };
           memory = { format = "{}% 󰍛"; };
-          network = {
-            interval = 1;
-            format-alt = "{ifname}: {ipaddr}/{cidr}";
-            format-disconnected = "Disconnected ⚠";
-            format-ethernet = "{ifname}: {ipaddr}/{cidr} 󰈁 {bandwidthUpBits}  {bandwidthDownBits} ";
-            format-linked = "{ifname} (No IP) 󰈂";
-            format-wifi = "{essid} {signalStrength}% 󰘊";
-          };
           pulseaudio = {
             format = "{volume}% {icon} {format_source}";
             format-bluetooth = "{volume}% {icon} {format_source}";
@@ -71,7 +62,30 @@ in
           temperature = {
             critical-threshold = 80;
             format = "{temperatureC}󰔄 {icon}";
-          }; 
+          };
+          "custom/weather" = {
+            format = "{}";
+            tooltip =  true;
+            interval = 1800;
+            exec = "${weatherScript}/bin/weather";
+            return-type = "json";
+          };
+        }
+        {
+          layer = "top";
+          position = "bottom";
+          modules-center = [ "hyprland/window" ];
+          modules-right = [
+            "network"
+          ];
+          network = {
+            interval = 1;
+            format-alt = "{ifname}: {ipaddr}/{cidr}";
+            format-disconnected = "Disconnected ⚠";
+            format-ethernet = "{bandwidthUpBits}  {bandwidthDownBits}  {ifname}: {ipaddr}/{cidr} 󰈁";
+            format-linked = "{ifname} (No IP) 󰈂";
+            format-wifi = "{essid} {signalStrength}% 󰘊";
+          };
         }
       ];
     };

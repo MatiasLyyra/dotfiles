@@ -1,0 +1,85 @@
+* {
+  border-radius: 0;
+  font-family: FiraCode;
+  font-size: 14px; 
+  min-height: 20px;
+}
+
+window#waybar {
+  color: white;
+  background: rgba(50, 50, 50, 0.4);
+  border-bottom: none;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+#workspaces {
+  margin-right: 8px;
+  transition: none;
+  background: transparent;
+}
+
+#workspaces button {
+  transition: none;
+  color: #7c818c;
+  background: transparent;
+  padding: 5px;
+  border-bottom: 2px solid transparent;   
+  border-top: 2px solid transparent;
+  border-left: none;
+  border-right: none;
+}
+
+#workspaces button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+  color: white;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  border-top: 2px solid transparent;
+  border-left: none;
+  border-right: none;
+  padding: 5px;
+  font-size: 14px;
+}
+
+#workspaces button.active {
+  color: white;
+  background: rgba(150, 150, 150, 0.4);
+  border-bottom: 2px solid white;
+}
+
+#submap {
+  transition: none;
+}
+
+#clock {
+  padding-left: 16px;
+  padding-right: 16px;
+  transition: none;
+  background: transparent;
+}
+
+#custom-weather {
+  padding-right: 16px;
+  transition: none;
+}
+
+#pulseaudio.muted {
+  color: #2a5c45;
+}
+
+#memory, #cpu, #temperature, #network, #pulseaudio {
+  transition: none;
+  background: transparent;
+  color: white;
+  padding-left: 12px;
+  padding-right: 4px;
+}
+
+#temperature.critical {
+  color: #eb4d4b;
+}
+

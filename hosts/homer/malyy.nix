@@ -8,5 +8,6 @@
     hyprland.enable = true;
     waybar.enable = true;
     xdg.enable = true;
+    games.enable = true;
   };
 }

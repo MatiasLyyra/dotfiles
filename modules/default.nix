@@ -5,7 +5,9 @@
     ./firefox
     ./hyprland
     ./waybar
+    ./wofi
     ./xdg
+    ./games
   ];
 
   config = {

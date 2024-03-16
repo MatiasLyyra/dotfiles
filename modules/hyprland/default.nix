@@ -12,8 +12,9 @@ in {
     };
     home.packages = with pkgs; [
       hyprland wofi swaybg wlsunset wl-clipboard wlr-randr waybar kitty pipewire wireplumber
+      mako
     ];
-    programs.waybar.systemd.enable = config.modules.waybar.enable;
+    modules.wofi.enable = true;
 
     home.file."~/.config/kitty/open-actions.conf".text = ''
       protocol file
@@ -21,8 +22,9 @@ in {
     '';
     wayland.windowManager.hyprland.settings = {
       exec-once = [
+        "waybar"
         "swaybg -i ${config.modules.wallpapers.firewatch-day}"
-        "dunst"
+        "mako"
         "exec-once=wlr-randr --output HDMI-A-1 --off && sleep 1 && wlr-randr --output HDMI-A-1 --on --pos 1920,0"
       ];
     };

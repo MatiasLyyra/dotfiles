@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.modules.nvidia;
 in
@@ -11,6 +11,7 @@ in
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
+      extraPackages = [ pkgs.libvdpau-va-gl ];
     };
     services.xserver.videoDrivers = ["nvidia"];
     hardware.nvidia = {
@@ -21,5 +22,8 @@ in
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
+    environment.variables.VDPAU_DRIVER = "va_gl";
+    environment.variables.LIBVA_DRIVER_NAME = "nvidia";
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
   };
 }

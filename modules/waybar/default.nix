@@ -1,4 +1,4 @@
-{ config, pkgs, lib, writeShellApplication, nixpkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   cfg = config.modules.waybar;
   python3 = pkgs.python3.withPackages (ps: with ps; [ requests ]);
@@ -65,7 +65,7 @@ in
           };
           "custom/weather" = {
             format = "{}";
-            tooltip =  true;
+            tooltip = true;
             interval = 1800;
             exec = "${weatherScript}/bin/weather";
             return-type = "json";

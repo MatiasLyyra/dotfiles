@@ -1,6 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 {
   imports = [
+    ./nvim
     ./wallpapers
     ./firefox
     ./hyprland
@@ -11,13 +12,14 @@
   ];
 
   config = {
-    home.packages = with pkgs; [ htop gnupg bat eza ];
+    home.packages = with pkgs; [ htop gnupg bat eza nil go_1_22 rustup ];
 
     programs.git = {
       enable = true;
       userName = "Matias Lyyra";
       userEmail = "matias.lyyra@gmail.com";
     };
+
 
     programs.vim = {
       enable = true;
@@ -36,7 +38,7 @@
       enableCompletion = false;
       enableAutosuggestions = true;
       syntaxHighlighting.enable = true;
-      
+
       dotDir = ".config/zsh";
 
       history = {
